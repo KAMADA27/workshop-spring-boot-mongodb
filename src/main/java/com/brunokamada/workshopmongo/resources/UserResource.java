@@ -1,5 +1,6 @@
 package com.brunokamada.workshopmongo.resources;
 
+import com.brunokamada.workshopmongo.domain.Post;
 import com.brunokamada.workshopmongo.domain.User;
 import com.brunokamada.workshopmongo.dto.UserDTO;
 import com.brunokamada.workshopmongo.services.UserService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,5 +59,12 @@ public class UserResource {
         obj = service.update(obj);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
